@@ -1,4 +1,4 @@
-module TD4(
+module MINI_CPU(
   input var RST,
   input var CLK,
   input var [3:0] SW,
@@ -70,7 +70,7 @@ module TD4(
   seg7dec disp_pc(.SW(addr), .HEX0(HEX3));
   seg7dec disp_a(.SW(ch0), .HEX0(HEX2));
   seg7dec disp_b(.SW(ch1), .HEX0(HEX1));
-  seg7dec disp_outp(.SW(ch2), .HEX0(HEX0));
+  seg7dec disp_outp(.SW(outp), .HEX0(HEX0));
 
   always_ff @(posedge clk) begin
     if (RST) begin

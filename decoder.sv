@@ -27,10 +27,10 @@ module decoder(
             LOAD_IGN = 4'bxxxx;
 
   // Select pattern
-  parameter SELECT_A = 4'b00,
-            SELECT_B = 4'b01,
-            SELECT_IN = 4'b10,
-            SELECT_ZERO = 4'b11;
+  parameter SELECT_A = 2'b00,
+            SELECT_B = 2'b01,
+            SELECT_IN = 2'b10,
+            SELECT_ZERO = 2'b11;
   
   logic [3:0] load;
   logic [1:0] select;

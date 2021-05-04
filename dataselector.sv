@@ -14,7 +14,7 @@ module dataselector(
       2'b01: out <= c1;
       2'b10: out <= c2;
       2'b11: out <= c3;
-      default: out <= 2'b000;
+      default: out <= 4'b0000;
     endcase
   end
   
