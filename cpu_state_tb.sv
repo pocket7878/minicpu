@@ -3,7 +3,7 @@ module cpu_state_tb;
   logic rst;
   logic [1:0] state;
 
-  cpu_state subject(
+  cpu_state dut(
     .clk(clk),
     .rst(rst),
     .state(state)

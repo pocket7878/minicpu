@@ -6,7 +6,7 @@ module alu_tb();
   logic c;
   logic [3:0] out;
 
-  alu subject(
+  alu dut(
     .ain(ain),
     .bin(bin),
     .c(c),
@@ -30,10 +30,5 @@ module alu_tb();
     bin = 4'b1111;
     #2
     $finish;
-  end
-
-  initial begin
-    $dumpfile("alu_tb.vcd");
-    $dumpvars(0, alu_tb);
   end
 endmodule
