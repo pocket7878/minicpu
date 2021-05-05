@@ -1,1 +1,3 @@
-*.sv.bak
+*
+!/src/*.sv
+!Makefile

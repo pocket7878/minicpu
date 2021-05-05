@@ -1,10 +1,11 @@
 `timescale 1ps/1ps
+`include "def.svh"
 
 module alu_tb();
-  logic [3:0] ain;
-  logic [3:0] bin;
+  logic [`DATA_WIDTH-1:0] ain;
+  logic [`DATA_WIDTH-1:0] bin;
   logic c;
-  logic [3:0] out;
+  logic [`DATA_WIDTH-1:0] out;
 
   alu dut(
     .ain(ain),

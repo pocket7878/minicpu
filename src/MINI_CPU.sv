@@ -1,3 +1,5 @@
+`include "def.svh"
+
 module MINI_CPU(
   input var RST,
   input var CLK,
@@ -13,14 +15,14 @@ module MINI_CPU(
 
   parameter ZERO = 4'b0000;
 
-  logic [3:0] ch0, ch1, ch2, ch3;
-  logic [3:0] addr;
+  logic [`DATA_WIDTH-1:0] ch0, ch1, ch2, ch3;
+  logic [`DATA_WIDTH-1:0] addr;
   
-  logic [3:0] a;
+  logic [`DATA_WIDTH-1:0] a;
   
-  logic [7:0] memdata;
+  logic [`PROG_WIDTH-1:0] prog_data;
   
-  logic [3:0] alu_out;
+  logic [`DATA_WIDTH-1:0] alu_out;
   logic [3:0] ld;
   
   logic cflag;
@@ -32,7 +34,7 @@ module MINI_CPU(
   logic [3:0] op, im;
   
   // Program Memory
-  rom rom_u(.addr(addr),.out(memdata));
+  rom prog_rom(.addr(addr),.out(prog_data));
 
   // Always zero dummy register.
   assign ch3 = ZERO;
@@ -48,8 +50,8 @@ module MINI_CPU(
   counter    pc(.reset(RST),.in(alu_out),.ld(ld[3]),.clk(clk),.out(addr));
   
   // Memory Data Selector
-  assign op = memdata[7:4];
-  assign im = memdata[3:0];
+  assign op = prog_data[7:4];
+  assign im = prog_data[3:0];
   
   decoder decoder_u(.op(op),.c(cflag),.sel(sel),.ld(ld));
 
