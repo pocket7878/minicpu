@@ -4,7 +4,7 @@ module MINI_CPU(
   input var RST,
   input var CLK,
   input var [3:0] SW,
-  output var [3:0] outp,
+  output var [`DATA_WIDTH:0] outp,
   output var [6:0] HEX0,
   output var [6:0] HEX1,
   output var [6:0] HEX2,
@@ -66,13 +66,11 @@ module MINI_CPU(
 
   alu alu_u(.ain(a), .bin(im), .c(cflag_r), .out(alu_out));
   
-  // Display Machine state on-board LED.
   seg7dec disp_op(.SW(op), .HEX0(HEX5));
   seg7dec disp_im(.SW(im), .HEX0(HEX4));
   seg7dec disp_pc(.SW(addr), .HEX0(HEX3));
-  seg7dec disp_a(.SW(ch0), .HEX0(HEX2));
-  seg7dec disp_b(.SW(ch1), .HEX0(HEX1));
-  seg7dec disp_outp(.SW(outp), .HEX0(HEX0));
+  seg7dec disp_outp_h(.SW(outp[7:4]), .HEX0(HEX1));
+  seg7dec disp_outp_l(.SW(outp[3:0]), .HEX0(HEX0));
 
   always_ff @(posedge clk) begin
     if (RST) begin
