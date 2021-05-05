@@ -1,0 +1,6 @@
+MOV B,0
+IN A
+ADD A,1
+MOV B,A
+OUT B
+JMP 5

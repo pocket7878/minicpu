@@ -3,8 +3,8 @@
 module MINI_CPU(
   input var RST,
   input var CLK,
-  input var [3:0] SW,
-  output var [`DATA_WIDTH:0] outp,
+  input var [`DATA_WIDTH-1:0] SW,
+  output var [`DATA_WIDTH-1:0] outp,
   output var [6:0] HEX0,
   output var [6:0] HEX1,
   output var [6:0] HEX2,
@@ -31,7 +31,8 @@ module MINI_CPU(
   logic [1:0] sel;
   
   assign outp = ch2;
-  logic [3:0] op, im;
+  logic [`OP_WIDTH-1:0] op;
+  logic [`IM_WIDTH-1:0] im;
   
   // Program Memory
   rom prog_rom(.addr(addr),.out(prog_data));
@@ -41,7 +42,8 @@ module MINI_CPU(
   
   // Clock division to 1 clock par 1s.
   logic clk;
-  slow_clk slow_clk_u(.clk(CLK), .rst(RST), .out(clk));
+  //slow_clk slow_clk_u(.clk(CLK), .rst(RST), .out(clk));
+  assign clk = CLK;
   
   // Registers
   register areg(.reset(RST),.in(alu_out),.ld(ld[0]),.clk(clk),.out(ch0));
@@ -50,8 +52,8 @@ module MINI_CPU(
   counter    pc(.reset(RST),.in(alu_out),.ld(ld[3]),.clk(clk),.out(addr));
   
   // Memory Data Selector
-  assign op = prog_data[7:4];
-  assign im = prog_data[3:0];
+  assign op = prog_data[`PROG_WIDTH-1:`PROG_WIDTH-`OP_WIDTH];
+  assign im = prog_data[`IM_WIDTH-1:0];
   
   decoder decoder_u(.op(op),.c(cflag),.sel(sel),.ld(ld));
 
@@ -66,11 +68,11 @@ module MINI_CPU(
 
   alu alu_u(.ain(a), .bin(im), .c(cflag_r), .out(alu_out));
   
-  seg7dec disp_op(.SW(op), .HEX0(HEX5));
-  seg7dec disp_im(.SW(im), .HEX0(HEX4));
-  seg7dec disp_pc(.SW(addr), .HEX0(HEX3));
-  seg7dec disp_outp_h(.SW(outp[7:4]), .HEX0(HEX1));
-  seg7dec disp_outp_l(.SW(outp[3:0]), .HEX0(HEX0));
+  seg7dec disp_op(.a(op), .HEX0(HEX5));
+  seg7dec disp_im(.a(im), .HEX0(HEX4));
+  seg7dec disp_pc(.a(addr), .HEX0(HEX3));
+  seg7dec disp_outp_h(.a(outp[7:4]), .HEX0(HEX1));
+  seg7dec disp_outp_l(.a(outp[3:0]), .HEX0(HEX0));
 
   always_ff @(posedge clk) begin
     if (RST) begin
