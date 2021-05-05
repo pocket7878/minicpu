@@ -38,36 +38,36 @@ module decoder(
    always_comb begin      
     case (op) 
       MOV_A_IM: begin
-        load <= LOAD_A;
-        select <= SELECT_ZERO;
+        load = LOAD_A;
+        select = SELECT_ZERO;
       end
       MOV_B_IM: begin
-        load <= LOAD_B;
-        select <= SELECT_ZERO;
+        load = LOAD_B;
+        select = SELECT_ZERO;
       end
       MOV_A_B: begin
-        load <= LOAD_A;
-        select <= SELECT_B;
+        load = LOAD_A;
+        select = SELECT_B;
       end
       MOV_B_A: begin
-        load <= LOAD_B;
-        select <= SELECT_A;
+        load = LOAD_B;
+        select = SELECT_A;
       end
       ADD_A_IM: begin
-        load <= LOAD_A;
-        select <= SELECT_A;
+        load = LOAD_A;
+        select = SELECT_A;
       end
       ADD_B_IM: begin
-        load <= LOAD_B;
-        select <= SELECT_B;
+        load = LOAD_B;
+        select = SELECT_B;
       end
       IN_A: begin
-        load <= LOAD_A;
-        select <= SELECT_IN;
+        load = LOAD_A;
+        select = SELECT_IN;
       end
       IN_B: begin
-        load <= LOAD_B;
-        select <= SELECT_IN;
+        load = LOAD_B;
+        select = SELECT_IN;
       end
       OUT_IM: begin
         load <= LOAD_C;
@@ -82,16 +82,16 @@ module decoder(
         select <= SELECT_ZERO;
       end
       JNC_IM: if (c == 0) begin
-        load <= LOAD_PC;
-        select <= SELECT_ZERO;
+        load = LOAD_PC;
+        select = SELECT_ZERO;
       end
       else begin
-        load <= LOAD_IGN;
-        select <= SELECT_ZERO;
+        load = LOAD_IGN;
+        select = SELECT_ZERO;
       end
       default: begin
-        load <= LOAD_IGN;
-        select <= SELECT_ZERO;
+        load = LOAD_IGN;
+        select = SELECT_ZERO;
       end
     endcase
   end

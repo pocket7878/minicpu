@@ -10,11 +10,11 @@ module dataselector(
   logic [3:0] out;
   always_comb begin
     case (sel)
-      2'b00: out <= c0;
-      2'b01: out <= c1;
-      2'b10: out <= c2;
-      2'b11: out <= c3;
-      default: out <= 4'b0000;
+      2'b00: out = c0;
+      2'b01: out = c1;
+      2'b10: out = c2;
+      2'b11: out = c3;
+      default: out = 4'bxxxx;
     endcase
   end
   

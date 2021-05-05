@@ -13,6 +13,7 @@ module slow_clk(
   always_ff @(posedge clk or posedge rst) begin
     if (rst) begin
       cnt <= COUNT_DEFAULT;
+      out <= 0;
     end
     else if (cnt == COUNT_MAX) begin
       out <= 1;
