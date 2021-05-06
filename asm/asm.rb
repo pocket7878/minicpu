@@ -2,8 +2,8 @@
 # ASM -> mif,dat
 ############################
 
-OP_WIDTH = 4
-IM_WIDTH = 8
+OP_WIDTH = 16
+IM_WIDTH = 16
 DEPTH = 16
 
 # @param [String] str
@@ -150,7 +150,7 @@ class IR
   end
 
   def to_mif(addr)
-    "#{to_binary(addr)} : #{to_binary(op_code, OP_WIDTH)}_#{to_binary(im, IM_WIDTH)}; -- #{op_name} #{raw_arg1},#{raw_arg2}"
+    "#{to_binary(addr, 32)} : #{to_binary(op_code, OP_WIDTH)}_#{to_binary(im, IM_WIDTH)}; -- #{op_name} #{raw_arg1},#{raw_arg2}"
   end
 
   def to_dat

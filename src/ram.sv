@@ -1,21 +1,27 @@
-module ram 
-  #(parameter N = 4, M = 8)
-  (
-    input var logic clk,
-    input var logic we,
-    input var logic [N-1:0] adr,
-    input var logic [M-1:0] din,
-    output var logic [M-1:0] dout
-  );
+module ram(
+  input var clk,
+  input var rst,
+  input var logic [31:0] a,
+  input var logic [31:0] wd,
+  input var logic we,
+  output var logic [31:0] rd
+);
 
+logic [31:0] mem[0:1023];
 
-  logic [M-1:0] mem [2**N-1:0];
-
-  always_ff @(posedge clk) begin
-    if (we) begin
-      mem[adr] <= din;
-    end
+// Initialize memory
+always_ff @(posedge rst) begin
+  for(int i=0; i<1024; i++) begin
+    mem[i] = 0;
   end
+end
 
-  assign dout = mem[adr];
+assign rd = mem[a];
+
+always_ff @(posedge clk) begin
+  if (we) begin
+    mem[a] <= wd;
+  end
+end
+
 endmodule
