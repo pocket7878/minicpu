@@ -11,9 +11,7 @@ logic [31:0] mem[0:1023];
 
 // Initialize memory
 always_ff @(posedge rst) begin
-  for(int i=0; i<1024; i++) begin
-    mem[i] = 0;
-  end
+  mem <= '{default:'0};
 end
 
 assign rd = mem[a];

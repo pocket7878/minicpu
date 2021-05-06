@@ -18,3 +18,5 @@ rom.mem
 src/rom.mif
 wlfthblt8d
 vish_stacktrace.vstf
+asm/rom.o
+asm/rom.bin

@@ -7,18 +7,15 @@ module register_file(
   input var logic we3,
   input var logic [31:0] wd3,
   output var logic [31:0] rd1,
-  output var logic [31:0] rd2
+  output var logic [31:0] rd2,
+  output var logic [31:0] out
 );
 
-logic [31:0] mem[0:32];
+logic [31:0] mem[32:0];
 
 // Initialze registers
 always_ff @(posedge rst) begin
-  if (rst) begin
-    for(int i=0; i<32; i++) begin
-      mem[i] <= 0;
-    end
-  end
+  mem <= '{default:'0};
 end
 
 assign rd1 = mem[a1];
@@ -29,5 +26,8 @@ always_ff @(posedge clk) begin
     mem[a3] <= wd3;
   end
 end
+
+// output for debug
+assign out = mem[2];
 
 endmodule
