@@ -14,3 +14,5 @@ devkits
 *.bak
 c5_pin_model_dump.txt
 
+rom.mem
+src/rom.mif

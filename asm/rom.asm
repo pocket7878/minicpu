@@ -1,4 +1,4 @@
-MOV B,0
+MOV B,1
 IN A
 ADD A,1
 MOV B,A
