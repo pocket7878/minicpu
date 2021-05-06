@@ -1,12 +1,10 @@
 module seg7dec (
-  input  var [3:0]   SW,
+  input  var [3:0]   a,
   output var logic  [6:0]   HEX0
 );
 
-/* 7セグメント表示デコーダ              */
-/* 各セグメントはgfedcbaの並びで0で点灯 */
 always_comb begin
-  case(SW)
+  case(a)
     4'h0:   HEX0 = 7'b1000000;
     4'h1:   HEX0 = 7'b1111001;
     4'h2:   HEX0 = 7'b0100100;

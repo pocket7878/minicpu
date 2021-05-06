@@ -10,7 +10,7 @@ module counter(
   
   parameter DEFAULT = 0;
 
-  logic [`DATA_WIDTH-1:0] cnt = DEFAULT;
+  logic [`DATA_WIDTH-1:0] cnt;
 
   always_ff @(posedge clk or posedge reset) begin
     if (reset) begin

@@ -1,5 +1,7 @@
+`include "def.svh"
+
 module decoder(
-  input var logic [3:0] op,
+  input var logic [`OP_WIDTH-1:0] op,
   input var logic c,
   output var logic [1:0] sel,
   output var logic [3:0] ld
