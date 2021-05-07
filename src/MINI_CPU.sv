@@ -44,11 +44,18 @@ logic [31:0] write_data;
 assign write_data = rd2;
 
 // Program memory -> Register file
+
+// Step 1: Judge rt <-> rd
 assign a1 = instr[25:21];
 assign a2 = instr[20:16];
-logic [32:0] write_reg;
+logic [31:0] prg_write_reg;
 logic reg_dst;
-mult2 prg_reg(.sel(reg_dst), .a(instr[20:16]), .b(instr[15:11]), .y(write_reg));
+mult2 prg_reg(.sel(reg_dst), .a(instr[20:16]), .b(instr[15:11]), .y(prg_write_reg));
+
+// Step 2: Judge rt or not
+logic [31:0] write_reg;
+logic reg_ra;
+mult2 ra_reg(.sel(reg_ra), .a(prg_write_reg), .b(32'd31), .y(write_reg));
 assign a3 = write_reg[4:0];
 
 // Sign Extend
@@ -87,12 +94,6 @@ ram ram_u(
   .rd(read_data)
 );
 
-// Data Memory -> Register File
-logic mem_to_reg;
-logic [31:0] result;
-mult2 mem_reg_mult(.sel(mem_to_reg), .a(alu_result), .b(read_data), .y(result));
-assign wd3 = result;
-
 // Increment Program Counter
 logic pc_src;
 logic [1:0] branch;
@@ -101,11 +102,22 @@ branch_judge branch_judge_u(.branch, .zero, .y(pc_src));
 logic [31:0] pc_plus_4;
 logic [31:0] pc_branch;
 assign pc_plus_4 = curr_pc + 4;
-assign pc_branch = sign_imm << 2 + pc_plus_4;
+assign pc_branch = (sign_imm << 2) + pc_plus_4;
 
 logic [31:0] branch_next_pc;
 
 mult2 pc_mult(.sel(pc_src), .a(pc_plus_4), .b(pc_branch), .y(branch_next_pc));
+
+// Data Memory or PC -> Register File
+logic mem_to_reg;
+logic [31:0] mem_reg_result;
+mult2 mem_reg_mult(.sel(mem_to_reg), .a(alu_result), .b(read_data), .y(mem_reg_result));
+
+logic pc_to_reg;
+logic [31:0] pc_reg_result;
+mult2 pc_reg_mult(.sel(pc_to_reg), .a(mem_reg_result), .b(pc_plus_4), .y(pc_reg_result));
+
+assign wd3 = pc_reg_result;
 
 // Direct jump
 logic [31:0] pc_jump;
@@ -120,11 +132,13 @@ control_unit control_unit_u(
   .op(instr[31:26]),
   .funct(instr[5:0]),
   .mem_to_reg,
+  .pc_to_reg,
   .mem_write,
   .branch,
   .alu_control,
   .alu_src,
   .reg_dst,
+  .reg_ra,
   .reg_write,
   .jump
 );

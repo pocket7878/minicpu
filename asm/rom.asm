@@ -4,7 +4,9 @@ start:
     nop
     addi $v0, $v0, 1
     addi $t0, $v0, 1
-    bne $0, $v0, end
+    jal hoge
+hoge:
+    bne $t0, $v0, end
     addu $v0, $v0, $v0
     j end
 end:
