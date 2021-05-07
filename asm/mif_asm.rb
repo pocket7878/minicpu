@@ -1,4 +1,4 @@
-MEM_DEPTH = 1024
+MEM_DEPTH = 256
 
 class MifRenderer
   # @params [Array<IR>] irs
@@ -43,7 +43,7 @@ class MifRenderer
   end
 
   def data_radix
-    "HEX"
+    "BIN"
   end
 end
 

@@ -7,18 +7,18 @@ module ram(
   output var logic [31:0] rd
 );
 
-logic [31:0] mem[0:1023];
+logic [31:0] mem[255:0];
 
-// Initialize memory
-always_ff @(posedge rst) begin
-  mem <= '{default:'0};
-end
+logic [29:0] word_addr;
+assign word_addr = a[31:2];
+assign rd = mem[word_addr];
 
-assign rd = mem[a];
-
-always_ff @(posedge clk) begin
-  if (we) begin
-    mem[a] <= wd;
+always_ff @(posedge clk or posedge rst) begin
+  if (rst) begin
+    mem <= '{default: '0};
+  end
+  else if (we) begin
+    mem[word_addr] <= wd;
   end
 end
 

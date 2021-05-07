@@ -60,8 +60,7 @@ assign a3 = write_reg[4:0];
 
 // Sign Extend
 logic [31:0] sign_imm;
-assign sign_imm[15:0] = instr[15:0];
-assign sign_imm[31:16] = instr[15];
+assign sign_imm = {{16{instr[15]}}, instr[15:0]};
 
 // ALU
 logic [31:0] src_a, src_b;

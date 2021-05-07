@@ -13,21 +13,19 @@ module register_file(
 
 logic [31:0] mem[31:0];
 
-// Initialze registers
-always_ff @(posedge rst) begin
-  mem <= '{default:'0};
-end
-
-assign rd1 = mem[a1];
-assign rd2 = mem[a2];
-
-always_ff @(posedge clk) begin
-  if (we3) begin
+always_ff @(posedge clk or posedge rst) begin
+  if (rst) begin
+    mem <= '{default: '0};
+  end
+  else if (we3) begin
     mem[a3] <= wd3;
   end
 end
 
 // output for debug
 assign out = mem[2];
+
+assign rd1 = (a1 != 0) ? mem[a1] : 0;
+assign rd2 = (a1 != 0) ? mem[a2] : 0;
 
 endmodule

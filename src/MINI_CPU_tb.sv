@@ -20,8 +20,8 @@ always begin
 end
 
 initial begin
-  rst = 1; #1; rst = 0;
-  #30;
+  rst = 1; #1; rst = 0; #1;
+  #1024;
   $finish;
 end
 

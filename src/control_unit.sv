@@ -102,6 +102,7 @@ always_comb begin
       pc_to_reg = 1'bx;
       alu_op = 2'b01;
       jump = 0;
+      jump_reg = 0;
     end
     // addi, addiu
     6'b00100?: begin
@@ -156,6 +157,7 @@ always_comb begin
       pc_to_reg = 1'bx;
       alu_op = 2'bxx;
       jump = 1'bx;
+      jump_reg = 1'bx;
     end
   endcase
 end
