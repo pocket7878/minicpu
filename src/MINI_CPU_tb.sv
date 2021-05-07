@@ -21,7 +21,7 @@ end
 
 initial begin
   rst = 1; #1; rst = 0;
-  #10;
+  #30;
   $finish;
 end
 
