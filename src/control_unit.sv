@@ -3,7 +3,7 @@ module control_unit(
   input var logic [5:0] funct,
   output var logic mem_to_reg,
   output var logic mem_write,
-  output var logic branch,
+  output var logic [1:0] branch,
   output var logic alu_src,
   output var logic reg_dst,
   output var logic reg_write,
@@ -25,7 +25,7 @@ always_comb begin
     6'b000000: begin
       reg_write <= 1;
       reg_dst <= 1;
-      branch <= 0;
+      branch <= 2'b00;
       mem_write <= 0;
       mem_to_reg <= 0;
       alu_op <= 2'b10;
@@ -42,7 +42,7 @@ always_comb begin
       reg_write <= 1;
       reg_dst <= 0;
       alu_src <= 1;
-      branch <= 0;
+      branch <= 2'b00;
       mem_write <= 0;
       mem_to_reg <= 1;
       alu_op <= 2'b00;
@@ -53,7 +53,7 @@ always_comb begin
       reg_write <= 0;
       reg_dst <= 1'bx;
       alu_src <= 1;
-      branch <= 0;
+      branch <= 2'b00;
       mem_write <= 1;
       mem_to_reg <= 1'bx;
       alu_op <= 2'b00;
@@ -64,7 +64,18 @@ always_comb begin
       reg_write <= 0;
       reg_dst <= 1'bx;
       alu_src <= 0;
-      branch <= 1;
+      branch <= 2'b01;
+      mem_write <= 0;
+      mem_to_reg <= 1'bx;
+      alu_op <= 2'b01;
+      jump <= 0;
+    end
+    // bne
+    6'b000101: begin
+      reg_write <= 0;
+      reg_dst <= 1'bx;
+      alu_src <= 0;
+      branch <= 2'b11;
       mem_write <= 0;
       mem_to_reg <= 1'bx;
       alu_op <= 2'b01;
@@ -75,7 +86,7 @@ always_comb begin
       reg_write <= 1;
       reg_dst <= 0;
       alu_src <= 1;
-      branch <= 0;
+      branch <= 2'b00;
       mem_write <= 0;
       mem_to_reg <= 0;
       alu_op <= 2'b00;
@@ -86,7 +97,7 @@ always_comb begin
       reg_write <= 0;
       reg_dst <= 1'bx;
       alu_src <= 1'bx;
-      branch <= 1'bx;
+      branch <= 2'bxx;
       mem_write <= 0;
       mem_to_reg <= 1'bx;
       alu_op <= 2'bxx;
@@ -96,7 +107,7 @@ always_comb begin
       reg_write <= 1'bx;
       reg_dst <= 1'bx;
       alu_src <= 1'bx;
-      branch <= 1'bx;
+      branch <= 2'bxx;
       mem_write <= 1'bx;
       mem_to_reg <= 1'bx;
       alu_op <= 2'bxx;

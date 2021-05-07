@@ -95,8 +95,8 @@ assign wd3 = result;
 
 // Increment Program Counter
 logic pc_src;
-logic branch;
-assign pc_src = zero & branch;
+logic [1:0] branch;
+branch_judge branch_judge_u(.branch, .zero, .y(pc_src));
 
 logic [31:0] pc_plus_4;
 logic [31:0] pc_branch;
