@@ -10,6 +10,7 @@ module control_unit(
   output var logic reg_ra,
   output var logic reg_write,
   output var logic jump,
+  output var logic jump_reg,
   output var logic [2:0] alu_control
 );
 
@@ -40,6 +41,12 @@ always_comb begin
       else begin
         alu_src = 0;
       end
+      if (funct == 6'b001000) begin
+        jump_reg = 1;
+      end
+      else begin
+        jump_reg = 0;
+      end
     end
     // lw
     6'b100011: begin
@@ -53,6 +60,7 @@ always_comb begin
       pc_to_reg = 0;
       alu_op = 2'b00;
       jump = 0;
+      jump_reg = 0;
     end
     // sw
     6'b101011: begin
@@ -66,6 +74,7 @@ always_comb begin
       pc_to_reg = 1'bx;
       alu_op = 2'b00;
       jump = 0;
+      jump_reg = 0;
     end
     // beq
     6'b000100: begin
@@ -79,6 +88,7 @@ always_comb begin
       pc_to_reg = 1'bx;
       alu_op = 2'b01;
       jump = 0;
+      jump_reg = 0;
     end
     // bne
     6'b000101: begin
@@ -105,6 +115,7 @@ always_comb begin
       pc_to_reg = 0;
       alu_op = 2'b00;
       jump = 0;
+      jump_reg = 0;
     end
     // j
     6'b000010: begin
@@ -118,6 +129,7 @@ always_comb begin
       pc_to_reg = 1'bx;
       alu_op = 2'bxx;
       jump = 1;
+      jump_reg = 0;
     end
     // jal
     6'b000011: begin
@@ -131,6 +143,7 @@ always_comb begin
       pc_to_reg = 1;
       alu_op = 2'bxx;
       jump = 1;
+      jump_reg = 0;
     end
     default: begin
       reg_write = 1'bx;

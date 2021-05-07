@@ -94,7 +94,7 @@ ram ram_u(
   .rd(read_data)
 );
 
-// Increment Program Counter
+// Increment Program Counter & Branch Program Counter
 logic pc_src;
 logic [1:0] branch;
 branch_judge branch_judge_u(.branch, .zero, .y(pc_src));
@@ -120,12 +120,20 @@ mult2 pc_reg_mult(.sel(pc_to_reg), .a(mem_reg_result), .b(pc_plus_4), .y(pc_reg_
 assign wd3 = pc_reg_result;
 
 // Direct jump
+logic jump;
 logic [31:0] pc_jump;
 assign pc_jump[31:28] = pc_plus_4[31:28];
 assign pc_jump[27:0] = instr[25:0] << 2;
-logic jump;
+logic [31:0] direct_jump_pc;
 
-mult2 pc_jump_mult(.sel(jump), .a(branch_next_pc), .b(pc_jump), .y(next_pc));
+mult2 pc_jump_mult(.sel(jump), .a(branch_next_pc), .b(pc_jump), .y(direct_jump_pc));
+
+// Register jump
+logic [31:0] reg_jump;
+assign reg_jump = rd1;
+logic jump_reg;
+
+mult2 pc_reg_jump_mult(.sel(jump_reg), .a(direct_jump_pc), .b(reg_jump), .y(next_pc));
 
 // Control Unit
 control_unit control_unit_u(
@@ -140,7 +148,8 @@ control_unit control_unit_u(
   .reg_dst,
   .reg_ra,
   .reg_write,
-  .jump
+  .jump,
+  .jump_reg
 );
 
 endmodule
