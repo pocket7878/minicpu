@@ -11,7 +11,7 @@ module register_file(
   output var logic [31:0] out
 );
 
-logic [31:0] mem[32:0];
+logic [31:0] mem[31:0];
 
 // Initialze registers
 always_ff @(posedge rst) begin
