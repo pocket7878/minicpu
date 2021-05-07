@@ -1,3 +1,5 @@
+MEM_DEPTH = 1024
+
 class MifRenderer
   # @params [Array<IR>] irs
   def initialize(width, depth, irs)
@@ -61,6 +63,6 @@ if __FILE__ == $0
   end
 
   open("#{ARGV[1]}", "w") do |mif_file|
-    MifRenderer.new(32, 32, irs).render(mif_file)
+    MifRenderer.new(32, MEM_DEPTH, irs).render(mif_file)
   end
 end
