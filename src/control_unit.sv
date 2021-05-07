@@ -21,16 +21,23 @@ alu_decoder alu_decoder_u(
 
 always_comb begin
   case (op)
+    // R-type
     6'b000000: begin
       reg_write <= 1;
       reg_dst <= 1;
-      alu_src <= 0;
       branch <= 0;
       mem_write <= 0;
       mem_to_reg <= 0;
       alu_op <= 2'b10;
       jump <= 0;
+      if (funct == 6'b000000) begin
+        alu_src <= 1;
+      end
+      else begin
+        alu_src <= 0;
+      end
     end
+    // lw
     6'b100011: begin
       reg_write <= 1;
       reg_dst <= 0;
@@ -41,6 +48,7 @@ always_comb begin
       alu_op <= 2'b00;
       jump <= 0;
     end
+    // sw
     6'b101011: begin
       reg_write <= 0;
       reg_dst <= 1'bx;
@@ -51,6 +59,7 @@ always_comb begin
       alu_op <= 2'b00;
       jump <= 0;
     end
+    // beq
     6'b000100: begin
       reg_write <= 0;
       reg_dst <= 1'bx;
@@ -61,6 +70,7 @@ always_comb begin
       alu_op <= 2'b01;
       jump <= 0;
     end
+    // addi
     6'b001000: begin
       reg_write <= 1;
       reg_dst <= 0;
@@ -71,6 +81,7 @@ always_comb begin
       alu_op <= 2'b00;
       jump <= 0;
     end
+    // j
     6'b000010: begin
       reg_write <= 0;
       reg_dst <= 1'bx;

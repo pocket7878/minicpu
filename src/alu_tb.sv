@@ -34,6 +34,12 @@ initial begin
   b = 4'b0011;
   #1;
   assert (y === 32'b0111) else $error("Failed to OR");
+  /* Test Shift Logic Left */
+  f = 3'b011;
+  a = 4'b0001;
+  b = 4'b0001;
+  #1;
+  assert (y === 32'b0010) else $error("Failed to shift");
   #1;
   $finish;
 end
