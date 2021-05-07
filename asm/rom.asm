@@ -1,6 +1,6 @@
 start:
     nop
-    addi $v0, $zero, 1
+    addiu $v0, $zero, 1
     nop
     addi $v0, $v0, 1
     j end
