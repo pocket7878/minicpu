@@ -20,7 +20,7 @@ alu_decoder alu_decoder_u(
 );
 
 always_comb begin
-  case (op)
+  casez (op)
     // R-type
     6'b000000: begin
       reg_write <= 1;
@@ -70,8 +70,8 @@ always_comb begin
       alu_op <= 2'b01;
       jump <= 0;
     end
-    // addi
-    6'b001000: begin
+    // addi, addiu
+    6'b00100?: begin
       reg_write <= 1;
       reg_dst <= 0;
       alu_src <= 1;
