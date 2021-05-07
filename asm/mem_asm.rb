@@ -15,7 +15,7 @@ class MemRenderer
 end
 
 if __FILE__ == $0
-  if ARGV.size != 2
+  if ARGV.size < 1 || ARGV.size > 2
     $stderr.puts "Usage: #{$0} <bin_file> <mem_file_path>"
     return
   end
@@ -29,7 +29,12 @@ if __FILE__ == $0
     end
   end
 
-  open("#{ARGV[1]}", "w") do |mem_file|
-    MemRenderer.new(irs).render(mem_file)
+  renderer = MemRenderer.new(irs)
+  if ARGV.size == 1
+    renderer.render($stdout)
+  else
+    open("#{ARGV[1]}", "w") do |mem_file|
+      renderer.render(mem_file)
+    end
   end
 end

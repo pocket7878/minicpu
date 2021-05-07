@@ -16,17 +16,17 @@ ram dut(
 );
 
 initial begin
-  a = 32'b0;
+  a = 32'b100;
   wd = 32'b0;
   we = 0;
   clk = 0;
   rst = 1; #1; rst = 0; #1;
   //Data initialize
   assert(rd === 32'b0) else $error("failed to initialize memory");
-  wd = 32'b1; #1;
+  wd = 32'b100; #1;
   we = 1; #1;
   clk = 1; #1; clk = 0; #1;
-  assert(rd === 32'b1) else $error("failed to write data.");
+  assert(rd === 32'b100) else $error("failed to write data.");
   $finish;
 end
 

@@ -24,11 +24,8 @@ $(ROM_MEM_FILE): $(ROM_BIN_FILE) asm/mem_asm.rb
 $(ROM_MIF_FILE): $(ROM_BIN_FILE) asm/mif_asm.rb
 	ruby asm/mif_asm.rb $(ROM_BIN_FILE) $(ROM_MIF_FILE)
 
-$(ROM_BIN_FILE): $(ROM_OBJ_FILE)
-	mips-linux-gnu-objcopy --only-section=.text -O binary $(ROM_OBJ_FILE) $(ROM_BIN_FILE)
-
-$(ROM_OBJ_FILE): $(ASM_FILE)
-	mips-linux-gnu-as -O0 -o $(ROM_OBJ_FILE) $(ASM_FILE)
+$(ROM_BIN_FILE): asm/c/test.c asm/c/crt0.asm
+	cd asm/c; $(MAKE) build; cd ../; cp c/out.bin rom.bin
 
 $(CDF_FILE): $(SRC)
 	quartus_sh --flow compile $(PROJECT)

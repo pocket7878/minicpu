@@ -18,5 +18,6 @@ rom.mem
 src/rom.mif
 wlfthblt8d
 vish_stacktrace.vstf
-asm/rom.o
-asm/rom.bin
+*.bin
+*.o
+mini_cpu_wave.do
