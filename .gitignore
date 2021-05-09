@@ -1,6 +1,10 @@
-MINI_CPU.qws
-MINI_CPU.qpf
-MINI_CPU.qsf
+*.qws
+*.qpf
+*.qsf
+*.mif
+*.bin
+*.o
+
 modelsim.ini
 transcript
 vlog.opt
@@ -15,9 +19,6 @@ devkits
 c5_pin_model_dump.txt
 
 rom.mem
-src/rom.mif
 wlfthblt8d
 vish_stacktrace.vstf
-*.bin
-*.o
 mini_cpu_wave.do
